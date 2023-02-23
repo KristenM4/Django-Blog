@@ -4,9 +4,9 @@ from django.template.loader import render_to_string
 
 # Create your views here.
 blogs = {
-    "1": "hello this is my first post",
-    "2": "hello this is my second post",
-    "3": "hello this is my third post"
+    "my first post": "hello this is my first post",
+    "my second post": "hello this is my second post",
+    "my third post": "hello this is my third post"
 }
 
 def index(request):
@@ -14,7 +14,8 @@ def index(request):
 
 
 def posts(request):
-    return render(request, "blog/posts.html")
+    blog_list = list(blogs.keys())
+    return render(request, "blog/posts.html", { "blogs": blog_list })
 
 
 def get_post(request, slug):
