@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block content %}
+{% include "blog/includes/header.html" %}
+
     <h2>Welcome to my website!</h2>
     <a href='{% url "posts" %}'>See my blog posts here!</a>
 {% endblock %}

@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block content %}
+{% include "blog/includes/header.html" %}
+
     <h2>A list of all blog posts:</h2>
     <ul>
     {% for blog in blogs %}
