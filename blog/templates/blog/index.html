@@ -1,12 +1,46 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block page_title %} 
     Homepage 
 {% endblock %}
 
 {% block content %}
-{% include "blog/includes/header.html" %}
+    {% include "blog/includes/header.html" %}
 
-    <h2>Welcome to my website!</h2>
-    <a href='{% url "posts" %}'>See my blog posts here!</a>
+    <section id="welcome">
+        <header>
+            <img src="{% static 'blog/kristen_aquarium.jpg' %}" alt="Kristen - The Author of this Blog" />
+            <h2>Kristen's Blog</h2>
+        </header>
+        <p>Hi, I'm Kristen and enjoy making blogs about nature and wildlife. I live in Malaysia, so there's a lot to blog about!</p>
+        <a href='{% url "posts" %}'>See my blog posts here!</a>
+    </section>
+
+    <section id="latest-posts">
+        <h2>My Latest Blogs</h2>
+
+        <ul>
+            <li>
+                <article class="post">
+                    <a href="">
+                        <img src="" alt="Latest Blog" />
+                        <div class="post__content">
+                            <h3>Blog Title</h3>
+                            <p>Clickbaity Blog Preview Text</p>
+                        </div>
+                    </a>
+                </article>
+            </li>
+        </ul>
+    </section>
+
+    <section id="about">
+        <h2>What I do</h2>
+        <p>I love animals, tech, and reading books about wild places.</p>
+        <p>
+            With this blog, I hope to let outsiders about Malaysia's great landscape and ecology. It's very beautiful and underappreciated!
+        </p>
+    </section>
+
 {% endblock %}
