@@ -1,10 +1,14 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block page_title %} Kristen's Blog {% endblock %}</title>
-    {% block page_css %} {% endblock %}
+    {% block page_css %}
+        <link rel="stylesheet" href="{% static 'app.css' %}">
+    {% endblock %}
 </head>
 <body>
     {% block content %}
