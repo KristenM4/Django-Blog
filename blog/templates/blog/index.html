@@ -5,6 +5,7 @@
     Homepage 
 {% endblock %}
 {% block page_css %}
+    <link rel="stylesheet" href="{% static 'blog/post.css' %}">
     <link rel="stylesheet" href="{% static 'blog/index.css' %}">
 {% endblock %}
 
@@ -23,17 +24,7 @@
         <h2>My Latest Blogs</h2>
 
         <ul>
-            <li>
-                <article class="post">
-                    <a href="">
-                        <img src="{% static 'blog/images/musang.jpg' %}" alt="Latest Blog" />
-                        <div class="post__content">
-                            <h3>Blog Title</h3>
-                            <p>Clickbaity Blog Preview Text</p>
-                        </div>
-                    </a>
-                </article>
-            </li>
+            {% include "blog/includes/post.html" %}
         </ul>
     </section>
 
