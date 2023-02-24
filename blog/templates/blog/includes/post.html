@@ -2,11 +2,11 @@
 
 <li>
     <article class="post">
-        <a href="{% url 'post' 'my-first-post' %}">
-            <img src="{% static 'blog/images/musang.jpg' %}" alt="Latest Blog" />
+        <a href="{% url 'post' blog_post.slug %}">
+            <img src="{% static 'blog/images/'|add:blog_post.image %}" alt={{blog_post.slug}} />
             <div class="post__content">
-                <h3>Blog Title</h3>
-                <p>Clickbaity Blog Preview Text - a description of what the blog is about, written in an interesting way that entices readers to click.</p>
+                <h3>{{ blog_post.title }}</h3>
+                <p>{{ blog_post.excerpt }}</p>
             </div>
         </a>
     </article>

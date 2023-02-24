@@ -15,15 +15,9 @@
 <section id="all-posts">
     <h2>All Blog Posts</h2>
     <ul>
-        {% include "blog/includes/post.html" %}
-        {% include "blog/includes/post.html" %}
-        {% include "blog/includes/post.html" %}
-        {% include "blog/includes/post.html" %}
-        {% include "blog/includes/post.html" %}
-        {% include "blog/includes/post.html" %}
-    <!-- {% for blog in blogs %}
-        <li><a href='{% url "post" blog%}'>{{ blog }}</a></li>
-    {% endfor %} -->
+    {% for post in all_posts %}
+        {% include "blog/includes/post.html" with blog_post=post %}
+    {% endfor %}
     </ul>
 </section>
 {% endblock %}

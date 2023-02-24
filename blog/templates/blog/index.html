@@ -24,7 +24,7 @@
         <h2>My Latest Blogs</h2>
 
         <ul>
-            {% include "blog/includes/post.html" %}
+            {% include "blog/includes/post.html" with blog_post=latest_post %}
         </ul>
     </section>
 
