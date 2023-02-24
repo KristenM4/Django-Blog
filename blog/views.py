@@ -71,7 +71,7 @@ blog_posts = [
 ]
 
 def index(request):
-    latest_post = blog_posts[0]
+    latest_post = blog_posts[-1]
     return render(request, "blog/index.html", {"latest_post": latest_post})
 
 
