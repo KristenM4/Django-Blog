@@ -1,11 +1,42 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block page_title %} 
-    All Posts 
+    This Post Title
+{% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" href="{% static 'blog/post-detail.css' %}">
 {% endblock %}
 
 {% block content %}
 {% include "blog/includes/header.html" %}
+    <section id="summary">
+        <h2>Post Title</h2>
+        <article>
+            <img src="{% static 'blog/images/musang.jpg' %}" alt="Post Title" />
+            <address>By Kristen</address>
+            <div>
+                Last updated on <time>July 10th</time>
+            </div>
+        </article>
+    </section>
 
-    <h2>{{ post_text }}</h2>
+    <main>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+            Rem possimus animi culpa cumque, delectus nemo est! Delectus, sed iure sit, 
+            deserunt totam tempore magnam voluptates laboriosam, necessitatibus fuga aliquam vero!
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+            Rem possimus animi culpa cumque, delectus nemo est! Delectus, sed iure sit, 
+            deserunt totam tempore magnam voluptates laboriosam, necessitatibus fuga aliquam vero!
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+            Rem possimus animi culpa cumque, delectus nemo est! Delectus, sed iure sit, 
+            deserunt totam tempore magnam voluptates laboriosam, necessitatibus fuga aliquam vero!
+        </p>
+    </main>
 {% endblock %}
