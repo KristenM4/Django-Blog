@@ -10,3 +10,11 @@ class Author(models.Model):
 
     def __str__(self):
         return f"Full name: {self.first_name} {self.last_name}, {self.email_address}"
+
+
+class Tag(models.Model):
+    caption = models.CharField(max_length=75)
+
+    def __str__(self):
+        return f"Caption: {self.caption}"
+    
