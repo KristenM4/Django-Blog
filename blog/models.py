@@ -18,3 +18,17 @@ class Tag(models.Model):
     def __str__(self):
         return f"Caption: {self.caption}"
     
+
+class Post(models.Model):
+    title = models.CharField(max_length=140)
+    excerpt = models.CharField(max_length=300)
+    image_name = models.CharField(max_length=140)
+    date = models.DateField()
+    slug = models.CharField(default="")
+    content = models.TextField()
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    tags = models.ManyToManyField(Tag)
+
+    def __str__(self):
+        return f"{self.title} - {self.author}, {self.date}: {self.excerpt}"
+    
