@@ -83,10 +83,5 @@ def posts(request):
 
 
 def get_post(request, slug):
-    for i in blog_posts:
-        if slug == i['slug']:
-            post_content = i['content'].split('\t')
-            return render(request, "blog/post.html", {"post": i, "post_content":post_content})
-    else:
-        error_page = render_to_string("404.html")
-        return HttpResponseNotFound(error_page)
+    specific_post = get_object_or_404(Post, slug=slug)
+    return render(request, "blog/post.html", {"post": specific_post})

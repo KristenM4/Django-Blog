@@ -14,7 +14,7 @@
     <section id="summary">
         <h2>{{ post.title }}</h2>
         <article>
-            <img src="{% static 'blog/images/'|add:post.image }} %}" alt="Post {{ post.title }}" />
+            <img src="{% static 'blog/images/'|add:post.image_name }} %}" alt="Post {{ post.title }}" />
             <address>By {{ post.author }}</address>
             <div>
                 Last updated on <time>{{ post.date|date:"d M Y" }}</time>
@@ -23,8 +23,6 @@
     </section>
 
     <main>
-            {% for paragraph in post_content %}
-            <p>{{paragraph}}</p>
-            {% endfor %}
+            <p>{{ post.content|linebreaks }}</p>
     </main>
 {% endblock %}
