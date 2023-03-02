@@ -73,8 +73,8 @@ blog_posts = [
 ]
 
 def index(request):
-    latest_post = Post.objects.all().order_by('-date')[0]
-    return render(request, "blog/index.html", {"latest_post": latest_post})
+    latest_posts = Post.objects.all().order_by('-date')[:3]
+    return render(request, "blog/index.html", {"latest_posts": latest_posts})
 
 
 def posts(request):
