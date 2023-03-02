@@ -78,7 +78,7 @@ def index(request):
 
 
 def posts(request):
-    all_posts = blog_posts
+    all_posts = Post.objects.all().order_by('-date')
     return render(request, "blog/posts.html", {"all_posts": all_posts})
 
 
