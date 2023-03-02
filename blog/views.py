@@ -74,6 +74,10 @@ blog_posts = [
 
 def index(request):
     latest_posts = Post.objects.all().order_by('-date')[:3]
+    latest_post = latest_posts[0]
+    new_tag = Tag.objects.get(caption="New")
+    if new_tag not in latest_post.tags.all():
+        latest_post.tags.add(new_tag)
     return render(request, "blog/index.html", {"latest_posts": latest_posts})
 
 
