@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponseNotFound, Http404
 from django.template.loader import render_to_string
 import datetime as dt
+from .models import Post, Author, Tag
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 blog_posts = [
@@ -71,7 +73,7 @@ blog_posts = [
 ]
 
 def index(request):
-    latest_post = blog_posts[-1]
+    latest_post = Post.objects.all().order_by('date')[0]
     return render(request, "blog/index.html", {"latest_post": latest_post})
 
 
