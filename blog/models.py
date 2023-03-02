@@ -9,14 +9,14 @@ class Author(models.Model):
     email_address = models.EmailField(max_length=75)
 
     def __str__(self):
-        return f"Full name: {self.first_name} {self.last_name}, {self.email_address}"
+        return f"{self.first_name} {self.last_name}, {self.email_address}"
 
 
 class Tag(models.Model):
     caption = models.CharField(max_length=75)
 
     def __str__(self):
-        return f"Caption: {self.caption}"
+        return f"{self.caption}"
     
 
 class Post(models.Model):
