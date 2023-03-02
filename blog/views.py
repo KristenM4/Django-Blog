@@ -15,11 +15,11 @@ blog_posts = [
     "content": """
         Lorem ipsum dolor sit amet consectetur adipisicing elit. 
         Rem possimus animi culpa cumque, delectus nemo est! Delectus, sed iure sit, 
-        deserunt totam tempore magnam voluptates laboriosam, necessitatibus fuga aliquam vero!\t
+        deserunt totam tempore magnam voluptates laboriosam, necessitatibus fuga aliquam vero!
 
         Lorem ipsum dolor sit amet consectetur adipisicing elit. 
         Rem possimus animi culpa cumque, delectus nemo est! Delectus, sed iure sit, 
-        deserunt totam tempore magnam voluptates laboriosam, necessitatibus fuga aliquam vero!\t
+        deserunt totam tempore magnam voluptates laboriosam, necessitatibus fuga aliquam vero!
 
         Lorem ipsum dolor sit amet consectetur adipisicing elit. 
         Rem possimus animi culpa cumque, delectus nemo est! Delectus, sed iure sit, 
