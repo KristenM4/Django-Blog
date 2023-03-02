@@ -84,4 +84,5 @@ def posts(request):
 
 def get_post(request, slug):
     specific_post = get_object_or_404(Post, slug=slug)
-    return render(request, "blog/post.html", {"post": specific_post})
+    post_tags = specific_post.tags.all()
+    return render(request, "blog/post.html", {"post": specific_post, "tags": post_tags})

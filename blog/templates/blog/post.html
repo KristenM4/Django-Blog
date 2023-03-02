@@ -13,6 +13,11 @@
 {% include "blog/includes/header.html" %}
     <section id="summary">
         <h2>{{ post.title }}</h2>
+        <div>
+                {% for tag in tags %}
+                    {{ tag }}
+                {% endfor %}
+        </div>
         <article>
             <img src="{% static 'blog/images/'|add:post.image_name }} %}" alt="Post {{ post.title }}" />
             <address><a href="mailto:{{post.author.email_address}}">By {{ post.author.first_name }} {{ post.author.last_name }}</a></address>
