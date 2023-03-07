@@ -35,6 +35,6 @@ class Post(models.Model):
 
 class Comment(models.Model):
     user_name = models.CharField(max_length=30)
-    comment = models.TextField(max_length=200)
+    comment_content = models.TextField(max_length=200)
     date = models.DateField(auto_now=True)
     
