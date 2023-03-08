@@ -118,6 +118,7 @@ class GetPost(DetailView):
             post_id = specific_post.id
             new_comment = Comment(user_name=name, comment_content=content, post_id=post_id)
             new_comment.save()
+            form = CommentForm()
             return render(request, "blog/post.html", {"post": specific_post, "form": form, "comments": comments, "tags": post_tags})
         else:
             return render(request, "blog/post.html", {"post": specific_post, "form": form, "comments": comments, "tags": post_tags})
