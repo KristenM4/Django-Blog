@@ -36,8 +36,8 @@ class Post(models.Model):
 class Comment(models.Model):
     user_name = models.CharField(max_length=30)
     comment_content = models.TextField(max_length=200)
-    date = models.DateField(auto_now=True)
-    post_id = models.IntegerField()
+    date = models.DateTimeField(auto_now_add=True)
+    blog_post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return f"{self.user_name}, {self.date}: {self.comment_content}"

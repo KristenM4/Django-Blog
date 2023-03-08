@@ -5,5 +5,5 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = "__all__"
-        exclude = ["date", "post_id"]
+        exclude = ["date", "blog_post"]
         labels = {"user_name": "Your Name", "comment_content": "Your Comment"}
