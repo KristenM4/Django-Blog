@@ -35,9 +35,18 @@
         <p>{{comment.comment_content}}</p>
         <br>
     {% endfor %}
-    <form action="/posts/{{post.slug}}/" method="POST">
-        {% csrf_token %}
-        {{ form }}
-        <button type="submit">Post Comment</button>
-    </form>
+    <section id="comment-form">
+        <h2>Add a comment:</h2>
+        <form action="/posts/{{post.slug}}/" method="POST">
+            {% csrf_token %}
+                {% for form_field in form %}
+                    <div class="form-control">
+                        {{ form_field.label_tag }}
+                        {{ form_field }}
+                        {{ form_field.errors }}
+                    </div>
+                {% endfor %}
+            <button type="submit">Post Comment</button>
+        </form>
+    </section>
 {% endblock %}
