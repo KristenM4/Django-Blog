@@ -5,21 +5,27 @@ import datetime as dt
 from .models import Post, Author, Tag, Comment
 from .forms import CommentForm
 from django.shortcuts import get_object_or_404
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 
 
-def index(request):
-    latest_posts = Post.objects.all().order_by('-date')[:3]
-    latest_post = latest_posts[0]
-    new_tag = Tag.objects.get(caption="New")
-    if new_tag not in latest_post.tags.all():
-        latest_post.tags.add(new_tag)
-    return render(request, "blog/index.html", {"latest_posts": latest_posts})
+class IndexView(ListView):
+    model = Post
+    context_object_name = "latest_posts"
+    template_name = "blog/index.html"
+
+    def get_queryset(self):
+        queryset = Post.objects.all().order_by('-date')[:3]
+        return queryset
 
 
-def posts(request):
-    all_posts = Post.objects.all().order_by('-date')
-    return render(request, "blog/posts.html", {"all_posts": all_posts})
+class PostsView(ListView):
+    model = Post
+    context_object_name = "all_posts"
+    template_name = "blog/posts.html"
+
+    def get_queryset(self):
+        queryset = Post.objects.all().order_by('-date')
+        return queryset
 
 
 class GetPost(DetailView):
@@ -33,7 +39,7 @@ class GetPost(DetailView):
         context["tags"] = self.object.tags.all()
         loaded_post = self.object
         return context
-    
+
     def post(self, request, slug):
         specific_post = get_object_or_404(Post, slug=slug)
         form = CommentForm(request.POST)
@@ -45,7 +51,8 @@ class GetPost(DetailView):
             name = new_data["user_name"]
             content = new_data["comment_content"]
             post_id = specific_post.id
-            new_comment = Comment(user_name=name, comment_content=content, post_id=post_id)
+            new_comment = Comment(
+                user_name=name, comment_content=content, post_id=post_id)
             new_comment.save()
             form = CommentForm()
             return render(request, "blog/post.html", {"post": specific_post, "form": form, "comments": comments, "tags": post_tags})
