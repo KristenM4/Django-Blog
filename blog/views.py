@@ -2,8 +2,10 @@ from django.shortcuts import render
 from django.http import HttpResponseNotFound, Http404
 from django.template.loader import render_to_string
 import datetime as dt
-from .models import Post, Author, Tag
+from .models import Post, Author, Tag, Comment
+from .forms import CommentForm
 from django.shortcuts import get_object_or_404
+from django.views.generic import DetailView
 
 # Create your views here.
 blog_posts = [
@@ -86,7 +88,27 @@ def posts(request):
     return render(request, "blog/posts.html", {"all_posts": all_posts})
 
 
-def get_post(request, slug):
-    specific_post = get_object_or_404(Post, slug=slug)
-    post_tags = specific_post.tags.all()
-    return render(request, "blog/post.html", {"post": specific_post, "tags": post_tags})
+# def get_post(request, slug):
+#     specific_post = get_object_or_404(Post, slug=slug)
+#     post_tags = specific_post.tags.all()
+#     return render(request, "blog/post.html", {"post": specific_post, "tags": post_tags})
+
+class GetPost(DetailView):
+    model = Post
+    template_name = "blog/post.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        loaded_post = self.object
+        return context
+    
+
+    # def get(self, request):
+    #     specific_post = get_object_or_404(Post, slug=slug)
+    #     post_tags = specific_post.tags.all()
+    #     return render(request, "blog/post.html", {"post": specific_post, "tags": post_tags})
+    
+    # def post(self, request):
+    #     specific_post = get_object_or_404(Post, slug=slug)
+    #     post_tags = specific_post.tags.all()
+    #     return render(request, "blog/post.html", {"post": specific_post, "tags": post_tags})
