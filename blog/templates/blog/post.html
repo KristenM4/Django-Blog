@@ -30,4 +30,9 @@
     <main>
             <p>{{ post.content|linebreaks }}</p>
     </main>
+    <form action="/posts/{{post.slug}}/" method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Post Comment</button>
+    </form>
 {% endblock %}
