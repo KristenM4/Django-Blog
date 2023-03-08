@@ -100,8 +100,28 @@ class GetPost(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["form"] = CommentForm()
+        context["comments"] = Comment.objects.all()
+        context["tags"] = self.object.tags.all()
         loaded_post = self.object
         return context
+    
+    def post(self, request, slug):
+        specific_post = get_object_or_404(Post, slug=slug)
+        form = CommentForm(request.POST)
+        comments = Comment.objects.all()
+        post_tags = specific_post.tags.all()
+
+        if form.is_valid():
+            new_data = form.cleaned_data
+            name = new_data["user_name"]
+            content = new_data["comment_content"]
+            post_id = specific_post.id
+            new_comment = Comment(user_name=name, comment_content=content, post_id=post_id)
+            new_comment.save()
+            return render(request, "blog/post.html", {"post": specific_post, "form": form, "comments": comments, "tags": post_tags})
+        else:
+            return render(request, "blog/post.html", {"post": specific_post, "form": form, "comments": comments, "tags": post_tags})
+
     
 
     # def get(self, request):
