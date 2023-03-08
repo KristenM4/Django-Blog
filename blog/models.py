@@ -37,4 +37,8 @@ class Comment(models.Model):
     user_name = models.CharField(max_length=30)
     comment_content = models.TextField(max_length=200)
     date = models.DateField(auto_now=True)
+    post_id = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.user_name}, {self.date}: {self.comment_content}"
     
