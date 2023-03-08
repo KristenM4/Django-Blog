@@ -30,6 +30,11 @@
     <main>
             <p>{{ post.content|linebreaks }}</p>
     </main>
+    {% for comment in comments %}
+        <p>{{comment.user_name}}, {{comment.date}}</p>
+        <p>{{comment.comment_content}}</p>
+        <br>
+    {% endfor %}
     <form action="/posts/{{post.slug}}/" method="POST">
         {% csrf_token %}
         {{ form }}

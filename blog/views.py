@@ -100,7 +100,7 @@ class GetPost(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["form"] = CommentForm()
-        context["comments"] = Comment.objects.all()
+        context["comments"] = Comment.objects.filter(post_id=self.object.id)
         context["tags"] = self.object.tags.all()
         loaded_post = self.object
         return context
@@ -108,7 +108,7 @@ class GetPost(DetailView):
     def post(self, request, slug):
         specific_post = get_object_or_404(Post, slug=slug)
         form = CommentForm(request.POST)
-        comments = Comment.objects.all()
+        comments = Comment.objects.filter(post_id=specific_post.id)
         post_tags = specific_post.tags.all()
 
         if form.is_valid():
