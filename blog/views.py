@@ -46,13 +46,17 @@ class GetPost(DetailView):
         comments = specific_post.comment_set.all().order_by("-date")
         post_tags = specific_post.tags.all()
 
-        if form.is_valid():
-            new_data = form.cleaned_data
-            name = new_data["user_name"]
-            content = new_data["comment_content"]
-            new_comment = Comment(
-                user_name=name, comment_content=content, blog_post=specific_post)
-            new_comment.save()
+        if "submit_comment_button" in request.POST:
+            if form.is_valid():
+                new_data = form.cleaned_data
+                name = new_data["user_name"]
+                content = new_data["comment_content"]
+                new_comment = Comment(
+                    user_name=name, comment_content=content, blog_post=specific_post)
+                new_comment.save()
+                return HttpResponseRedirect(reverse("post", args=[slug]))
+            else:
+                return render(request, "blog/post.html", {"post": specific_post, "form": form, "comments": comments, "tags": post_tags})
+        elif "read_later_button" in request.POST:
+            print("added to read later list")
             return HttpResponseRedirect(reverse("post", args=[slug]))
-        else:
-            return render(request, "blog/post.html", {"post": specific_post, "form": form, "comments": comments, "tags": post_tags})

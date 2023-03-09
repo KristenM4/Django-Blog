@@ -21,6 +21,11 @@
 {% endif %}
 
     <section id="summary">
+        <form action="/posts/{{post.slug}}/" method="POST" id="read-later-form">
+            {% csrf_token %}
+            <input type="hidden" name="read_later_id" value="{{ post.id }}">
+            <button type="submit" name="read_later_button">Read Later</button>
+        </form>
         <h2>{{ post.title }}</h2>
         <div>
                 {% for tag in tags %}
@@ -59,7 +64,7 @@
                         {{ form_field.errors }}
                     </div>
                 {% endfor %}
-            <button type="submit">Post Comment</button>
+            <button type="submit" name="submit_comment_button">Post Comment</button>
         </form>
     </section>
 
