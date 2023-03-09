@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponseNotFound, Http404
+from django.http import HttpResponseNotFound, Http404, HttpResponseRedirect
+from django.urls import reverse
 from django.template.loader import render_to_string
 import datetime as dt
 from .models import Post, Author, Tag, Comment
@@ -52,7 +53,6 @@ class GetPost(DetailView):
             new_comment = Comment(
                 user_name=name, comment_content=content, blog_post=specific_post)
             new_comment.save()
-            form = CommentForm()
-            return render(request, "blog/post.html", {"post": specific_post, "form": form, "comments": comments, "tags": post_tags})
+            return HttpResponseRedirect(reverse("post", args=[slug]))
         else:
             return render(request, "blog/post.html", {"post": specific_post, "form": form, "comments": comments, "tags": post_tags})
