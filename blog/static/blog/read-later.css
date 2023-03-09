@@ -41,3 +41,13 @@ body {
 #read-later a:active {
     background-color: #ccc;
 }
+
+.remove_button {
+    font: inherit;
+    background-color: #700202;
+    color: white;
+    border: 1px solid #700202;
+    padding: 0.2rem .8rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
