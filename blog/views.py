@@ -7,6 +7,7 @@ from .models import Post, Author, Tag, Comment
 from .forms import CommentForm
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, ListView
+from django.views.generic.base import TemplateView
 
 
 class IndexView(ListView):
@@ -60,3 +61,13 @@ class GetPost(DetailView):
         elif "read_later_button" in request.POST:
             print("added to read later list")
             return HttpResponseRedirect(reverse("post", args=[slug]))
+
+
+class ReadLaterView(TemplateView):
+    template_name = "blog/read_later.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+    
