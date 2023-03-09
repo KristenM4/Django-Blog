@@ -158,6 +158,15 @@ main {
   max-width: 40rem;
 }
 
+#rl-alert {
+  margin: 8rem auto 1rem auto;
+  border: 1px solid #114977;
+  background-color: #e6f4ff;
+  padding: 1rem;
+  width: 90%;
+  max-width: 40rem;
+}
+
 #alert a {
   text-decoration: none;
   border: 1px solid #d6000b;

@@ -64,13 +64,15 @@ class GetPost(DetailView):
             post_id = specific_post.id
             if "read_later" not in request.session:
                 request.session["read_later"] = list([post_id])
+                return render(request, "blog/post.html", {"post": specific_post, "form": form, "comments": comments, "tags": post_tags, "read_later_alert": True, "read_later_text": 'Successfully added to "Read Later"!'})
+
             elif post_id in request.session["read_later"]:
-                return render(request, "blog/post.html", {"post": specific_post, "form": form, "comments": comments, "tags": post_tags, "read_later_alert": True})
+                return render(request, "blog/post.html", {"post": specific_post, "form": form, "comments": comments, "tags": post_tags, "read_later_alert": True, "read_later_text": 'Already in "Read Later"'})
             else:
                 read_later_list = request.session["read_later"]
                 read_later_list.append(post_id)
                 request.session["read_later"] = read_later_list
-            return HttpResponseRedirect(reverse("post", args=[slug]))
+                return render(request, "blog/post.html", {"post": specific_post, "form": form, "comments": comments, "tags": post_tags, "read_later_alert": True, "read_later_text": 'Successfully added to "Read Later"!'})
 
 
 class ReadLaterView(TemplateView):
