@@ -63,11 +63,13 @@ class GetPost(DetailView):
             form = CommentForm()
             post_id = specific_post.id
             if "read_later" not in request.session:
-                request.session["read_later"] = [post_id]
+                request.session["read_later"] = list([post_id])
             elif post_id in request.session["read_later"]:
                 return render(request, "blog/post.html", {"post": specific_post, "form": form, "comments": comments, "tags": post_tags, "read_later_alert": True})
             else:
-                request.session["read_later"].append(post_id)
+                read_later_list = request.session["read_later"]
+                read_later_list.append(post_id)
+                request.session["read_later"] = read_later_list
             return HttpResponseRedirect(reverse("post", args=[slug]))
 
 
@@ -77,13 +79,17 @@ class ReadLaterView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         request = self.request
-        read_later_list = request.session.get("read_later")
-        post_list = []
-        for item in read_later_list:
-            post = get_object_or_404(Post, pk=item)
-            if post not in post_list:
-                post_list.append(post)
+        if "read_later" not in request.session:
+            post_list = []
+        else:
+            read_later_list = request.session.get("read_later")
+            post_list = []
+            for item in read_later_list:
+                post = get_object_or_404(Post, pk=item)
+                if post not in post_list:
+                    post_list.append(post)
         context["read_later_posts"] = post_list
+        context["empty_list"] = post_list == []
         return context
 
     
