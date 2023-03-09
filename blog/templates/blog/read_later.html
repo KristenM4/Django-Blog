@@ -22,7 +22,14 @@
 
     <ul>
         {% for item in read_later_posts %}
-            <li><a href="{% url 'post' item.slug %}">{{item.title}}</a></li>
+            <li>
+                <a href="{% url 'post' item.slug %}">{{item.title}}</a>
+                <form action="/read-later/" method="POST" name="remove-rl-item">
+                    {% csrf_token %}
+                    <input type="hidden" name="remove_rl_id" value="{{ item.id }}">
+                    <button type="submit">Remove</button>
+                </form>
+            </li>
         {% endfor %}
     </ul>
 

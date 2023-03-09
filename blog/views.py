@@ -6,6 +6,7 @@ import datetime as dt
 from .models import Post, Author, Tag, Comment
 from .forms import CommentForm
 from django.shortcuts import get_object_or_404
+from django.views import View
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateView
 
@@ -59,6 +60,7 @@ class GetPost(DetailView):
                 return HttpResponseRedirect(reverse("post", args=[slug]))
             else:
                 return render(request, "blog/post.html", {"post": specific_post, "form": form, "comments": comments, "tags": post_tags, "read_later_alert": False})
+
         elif "read_later_button" in request.POST:
             form = CommentForm()
             post_id = specific_post.id
@@ -68,7 +70,7 @@ class GetPost(DetailView):
 
             elif post_id in request.session["read_later"]:
                 return render(request, "blog/post.html", {"post": specific_post, "form": form, "comments": comments, "tags": post_tags, "read_later_alert": True, "read_later_text": 'Already in "Read Later"'})
-            
+
             else:
                 read_later_list = request.session["read_later"]
                 read_later_list.append(post_id)
@@ -76,11 +78,10 @@ class GetPost(DetailView):
                 return render(request, "blog/post.html", {"post": specific_post, "form": form, "comments": comments, "tags": post_tags, "read_later_alert": True, "read_later_text": 'Successfully added to "Read Later"!'})
 
 
-class ReadLaterView(TemplateView):
+class ReadLaterView(View):
     template_name = "blog/read_later.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    
+    def get(self, request):
         request = self.request
         if "read_later" not in request.session:
             post_list = []
@@ -91,8 +92,11 @@ class ReadLaterView(TemplateView):
                 post = get_object_or_404(Post, pk=item)
                 if post not in post_list:
                     post_list.append(post)
-        context["read_later_posts"] = post_list
-        context["empty_list"] = post_list == []
-        return context
-
+        return render(request, "blog/read_later.html", {"read_later_posts": post_list, "empty_list": post_list == []})
     
+    def post(self, request):
+        read_later_list = request.session.get("read_later")
+        remove_post_id = int(request.POST["remove_rl_id"])
+        read_later_list.remove(remove_post_id)
+        request.session["read_later"] = read_later_list
+        return HttpResponseRedirect(reverse("read_later"))
