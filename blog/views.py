@@ -36,14 +36,14 @@ class GetPost(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["form"] = CommentForm()
-        context["comments"] = self.object.comment_set.all()
+        context["comments"] = self.object.comment_set.all().order_by("-date")
         context["tags"] = self.object.tags.all()
         return context
 
     def post(self, request, slug):
         specific_post = get_object_or_404(Post, slug=slug)
         form = CommentForm(request.POST)
-        comments = specific_post.comment_set.all()
+        comments = specific_post.comment_set.all().order_by("-date")
         post_tags = specific_post.tags.all()
 
         if form.is_valid():
