@@ -12,6 +12,12 @@
 {% block content %}
 {% include "blog/includes/header.html" %}
 
+{% if read_later_alert %}
+<div id="alert">
+    <h2>Already in "Read later"</h2>
+</div>
+{% endif %}
+
 {% if form.errors %}
 <div id="alert">
     <h2>Saving the comment failed!</h2>

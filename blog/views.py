@@ -39,15 +39,16 @@ class GetPost(DetailView):
         context["form"] = CommentForm()
         context["comments"] = self.object.comment_set.all().order_by("-date")
         context["tags"] = self.object.tags.all()
+        context["read_later_alert"] = False
         return context
 
     def post(self, request, slug):
         specific_post = get_object_or_404(Post, slug=slug)
-        form = CommentForm(request.POST)
         comments = specific_post.comment_set.all().order_by("-date")
         post_tags = specific_post.tags.all()
 
         if "submit_comment_button" in request.POST:
+            form = CommentForm(request.POST)
             if form.is_valid():
                 new_data = form.cleaned_data
                 name = new_data["user_name"]
@@ -57,9 +58,16 @@ class GetPost(DetailView):
                 new_comment.save()
                 return HttpResponseRedirect(reverse("post", args=[slug]))
             else:
-                return render(request, "blog/post.html", {"post": specific_post, "form": form, "comments": comments, "tags": post_tags})
+                return render(request, "blog/post.html", {"post": specific_post, "form": form, "comments": comments, "tags": post_tags, "read_later_alert": False})
         elif "read_later_button" in request.POST:
-            print("added to read later list")
+            form = CommentForm()
+            post_id = specific_post.id
+            if "read_later" not in request.session:
+                request.session["read_later"] = [post_id]
+            elif post_id in request.session["read_later"]:
+                return render(request, "blog/post.html", {"post": specific_post, "form": form, "comments": comments, "tags": post_tags, "read_later_alert": True})
+            else:
+                request.session["read_later"].append(post_id)
             return HttpResponseRedirect(reverse("post", args=[slug]))
 
 
@@ -68,6 +76,14 @@ class ReadLaterView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        request = self.request
+        read_later_list = request.session.get("read_later")
+        post_list = []
+        for item in read_later_list:
+            post = get_object_or_404(Post, pk=item)
+            if post not in post_list:
+                post_list.append(post)
+        context["read_later_posts"] = post_list
         return context
 
     
