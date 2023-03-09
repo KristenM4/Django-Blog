@@ -5,26 +5,29 @@
     Read Later
 {% endblock %}
 {% block page_css %}
-    <link rel="stylesheet" href="{% static 'blog/all-posts.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/read-later.css' %}">
 {% endblock %}
 
 {% block content %}
 
 {% include "blog/includes/header.html" %}
-<br>
-<br>
-<br>
-<div id="read-later">
+
+<section id="read-later">
     <h2>Read Later</h2>
+
+    {% if empty_list %}
+    <br>
+    <h3>Your Read Later list is empty! Add some posts using the "Read  Later" button.</h3>
+    {% endif %}
+
     <ul>
         {% for item in read_later_posts %}
             <li><a href="{% url 'post' item.slug %}">{{item.title}}</a></li>
         {% endfor %}
     </ul>
-</div>
 
-{% if empty_list %}
-    <h3>Your Read Later list is empty! Add some posts using the "Read  Later" button.</h3>
-{% endif %}
+</section>
+
+
 
 {% endblock %}

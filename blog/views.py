@@ -68,6 +68,7 @@ class GetPost(DetailView):
 
             elif post_id in request.session["read_later"]:
                 return render(request, "blog/post.html", {"post": specific_post, "form": form, "comments": comments, "tags": post_tags, "read_later_alert": True, "read_later_text": 'Already in "Read Later"'})
+            
             else:
                 read_later_list = request.session["read_later"]
                 read_later_list.append(post_id)
