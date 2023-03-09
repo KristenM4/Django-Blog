@@ -14,7 +14,7 @@
 
 {% if read_later_alert %}
 <div id="alert">
-    <h2>Already in "Read later"</h2>
+    <h2>Already in "Read Later"</h2>
 </div>
 {% endif %}
 
@@ -27,16 +27,16 @@
 {% endif %}
 
     <section id="summary">
-        <form action="/posts/{{post.slug}}/" method="POST" id="read-later-form">
-            {% csrf_token %}
-            <input type="hidden" name="read_later_id" value="{{ post.id }}">
-            <button type="submit" name="read_later_button">Read Later</button>
-        </form>
         <h2>{{ post.title }}</h2>
         <div>
                 {% for tag in tags %}
                     <span class="tag">{{ tag.caption }}</span>
                 {% endfor %}
+                <form action="/posts/{{post.slug}}/" method="POST" id="read-later-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="read_later_id" value="{{ post.id }}">
+                    <button type="submit" name="read_later_button" id="read-later-button">Read Later</button>
+                </form>
         </div>
         <article>
             <img src="{{ post.image_name.url }}" alt="Post {{ post.title }}" />
